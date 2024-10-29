@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moja Strona</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Kalkulator</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Kalkulator</a></li>
+                <li><a href="info.html">Informacje</a></li>
+                <li><a href="kontakt.html">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section>
+        <h2>Kalkulator</h2>
+        <div class="calculator">
+            <button onclick="addToDisplay('7')">7</button>
+            <button onclick="addToDisplay('8')">8</button>
+            <button onclick="addToDisplay('9')">9</button>
+            <button onclick="setOperator('/')">/</button><br>
+            <button onclick="addToDisplay('4')">4</button>
+            <button onclick="addToDisplay('5')">5</button>
+            <button onclick="addToDisplay('6')">6</button>
+            <button onclick="setOperator('*')">x</button><br>
+            <button onclick="addToDisplay('1')">1</button>
+            <button onclick="addToDisplay('2')">2</button>
+            <button onclick="addToDisplay('3')">3</button>
+            <button onclick="setOperator('+')">+</button>
+            <button onclick="back()">⌫</button><br>
+            <button onclick="clearDisplay()">C</button>
+            <button onclick="addToDisplay('0')">0</button>
+            <button onclick="addToDisplay('.')">,</button>
+            <button onclick="setOperator('-')">-</button>
+            <button onclick="calculateResult()">=</button>
+        </div>
+        <div id="result">
+            <p id="wynik">Wynik: </p>
+        </div>
+    </section>
+    
+    <footer>
+        <p>Autor: Maciej Migdał</p>
+    </footer>
+
+    <script>
+        let caly = "";
+        let operator = "";
+        let firstNumber = null;
+
+        function addToDisplay(value) {
+            caly += value;
+            document.getElementById("wynik").innerHTML = "Wynik: " + caly;
+        }
+
+        function setOperator(op) {
+            if (caly === "") return; 
+            firstNumber = parseFloat(caly);
+            operator = op;
+            caly = "";
+        }
+
+        function calculateResult() {
+            if (firstNumber === null || caly === "" || operator === "") return;
+            const secondNumber = parseFloat(caly);
+            let result;
+
+            switch (operator) {
+                case '+':
+                    result = firstNumber + secondNumber;
+                    break;
+                case '-':
+                    result = firstNumber - secondNumber;
+                    break;
+                case '*':
+                    result = firstNumber * secondNumber;
+                    break;
+                case '/':
+                    result = firstNumber / secondNumber;
+                    break;
+                default:
+                    return;
+            }
+
+            caly = result.toString();
+            document.getElementById("wynik").innerHTML = "Wynik: " + caly;
+            operator = "";
+            firstNumber = null;
+        }
+
+        function clearDisplay() {
+            caly = "";
+            operator = "";
+            firstNumber = null;
+            document.getElementById("wynik").innerHTML = "Wynik: ";
+        }
+
+        function back() {
+            caly = caly.slice(0, -1);
+            document.getElementById("wynik").innerHTML = "Wynik: " + caly;
+        }
+    </script>
+</body>
+</html>
